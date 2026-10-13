@@ -1,0 +1,47 @@
+name: gCelestialPracticeCore
+version: '1.0.0'
+main: br.gcelestial.practicecore.GCelestialPracticeCore
+api-version: '1.21'
+authors: [gCelestial]
+description: Core de practice - filas, duelos, ranks e arenas por schematic
+depend: [WorldEdit]
+commands:
+  gcpc:
+    description: Comando central do gCelestialPracticeCore
+    aliases: [practicecore, gcelestial]
+    usage: /gcpc <reload|setspawn|setkit|stats|leave|party>
+  party:
+    description: Sistema de party
+    usage: /party <create|invite|accept|join|kick|leave|disband|public|private|info>
+  spawn:
+    description: Teleporta para o spawn do practice
+    usage: /spawn
+  setspawn:
+    description: Define o spawn do practice
+    usage: /setspawn
+    permission: gcelestial.admin
+  lobby:
+    description: Volta ao lobby da rede
+    aliases: [hub]
+    usage: /lobby
+  discord:
+    description: Link do Discord
+    aliases: [dc]
+    usage: /discord
+  site:
+    description: Link do site
+    usage: /site
+  loja:
+    description: Link da loja
+    usage: /loja
+  duelo:
+    description: Desafia um jogador para um duelo 1v1
+    aliases: [duelar]
+    usage: /duelo <jogador>
+  dueloaceitar:
+    description: Aceita um desafio de duelo
+    usage: /dueloaceitar [jogador]
+permissions:
+  gcelestial.admin:
+    description: Administracao do gCelestialPracticeCore
+    default: op

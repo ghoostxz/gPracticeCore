@@ -1,0 +1,264 @@
+# ===== gCelestialPracticeCore =====
+prefix: "&b&lgCelestial &8» &7"
+
+# Gamemode do jogador: no lobby (ao entrar no servidor / voltar do duelo) e durante a batalha.
+gamemode:
+  lobby: ADVENTURE
+  duel: SURVIVAL
+
+duel:
+  # Mundo (vazio, criado automaticamente) onde as arenas sao coladas
+  world: "practice_arenas"
+  paste-y: 100
+  # Distancia em blocos (eixo X) entre uma arena e outra
+  slot-spacing: 1000
+  rounds-to-win: 3
+  countdown-seconds: 3
+  # Ticks entre um ponto e o inicio do proximo round (20 ticks = 1s)
+  round-delay-ticks: 40
+  # Ticks entre o fim do duelo e a volta ao spawn
+  end-delay-ticks: 60
+
+ranked:
+  start-points: 0
+  # Cada rank = X pontos (LT5 = 0-99, HT5 = 100-199 ... HT1 = 900+)
+  points-per-rank: 100
+  win-points: 25
+  loss-points: 20
+  # Diferenca maxima de pontos para parear no inicio
+  max-point-diff: 100
+  # A cada X segundos na fila a diferenca aceita aumenta em expand-step
+  expand-every-seconds: 10
+  expand-step: 50
+
+# Posicao de cada item na hotbar ao entrar: slot de 0 (primeiro) a 8 (ultimo).
+# Depois de mudar, use /gcpc reload para aplicar nos jogadores online.
+hotbar:
+  unranked:
+    slot: 0
+    material: STONE_SWORD
+    name: "&aFila Normal &7(Clique direito)"
+    lore:
+      - "&7Entre numa fila sem ranking."
+  ranked:
+    slot: 1
+    material: IRON_SWORD
+    name: "&6Fila Ranqueada &7(Clique direito)"
+    lore:
+      - "&7Ganhe e perca pontos de rank."
+  party:
+    slot: 2
+    material: NETHER_STAR
+    name: "&dParty &7(Clique direito)"
+    lore:
+      - "&7Crie uma party, convide amigos"
+      - "&7e entrem juntos nas filas."
+  kit-editor:
+    slot: 3
+    material: ANVIL
+    name: "&bEditar Layout do Kit &7(Clique direito)"
+    lore:
+      - "&7Reorganize a hotbar e o inventario"
+      - "&7de cada modo do jeito que preferir."
+  # Itens que aparecem so quando necessario:
+  # - leave-queue: enquanto o jogador esta em qualquer fila
+  # - party-disband: para o LIDER enquanto esta numa party (destroi a party)
+  # - party-leave: para os MEMBROS enquanto estao numa party
+  party-disband:
+    slot: 7
+    material: BARRIER
+    name: "&4Destruir Party &7(Clique direito)"
+    lore:
+      - "&7Desfaz a party e remove todos."
+  party-leave:
+    slot: 7
+    material: ORANGE_DYE
+    name: "&6Sair da Party &7(Clique direito)"
+    lore:
+      - "&7Voce deixa a party."
+  leave-queue:
+    slot: 8
+    material: RED_DYE
+    name: "&cSair da fila"
+    lore:
+      - "&7Clique direito para sair da fila."
+
+# /lobby: tira o jogador da fila e leva ao lobby da rede.
+lobby:
+  # COMMAND = executa o comando abaixo como se o jogador o digitasse (ex.: "queue lobby")
+  # CONNECT = envia direto ao servidor "server" pelo canal BungeeCord (Velocity)
+  type: COMMAND
+  command: "queue lobby"
+  server: "lobby"
+  # true = nao permite usar /lobby durante um duelo
+  block-in-duel: true
+
+# Comandos de links: /discord (/dc), /site e /loja.
+# Troque a "url" e o texto em "message" (use {url} para inserir o link).
+# Clicar em qualquer linha da mensagem abre o link (so funciona se a url comecar com http:// ou https://).
+# /duelo <jogador>: desafio 1v1 (sem ranking) escolhendo a modalidade
+challenge:
+  expire-seconds: 30
+
+links:
+  discord:
+    url: "https://discord.gg/seulink"
+    message:
+      - ""
+      - "&9&lDISCORD"
+      - "&7Entre na nossa comunidade: &b{url}"
+      - ""
+  site:
+    url: "https://seusite.com.br"
+    message:
+      - ""
+      - "&a&lSITE"
+      - "&7Acesse nosso site: &b{url}"
+      - ""
+  loja:
+    url: "https://loja.seusite.com.br"
+    message:
+      - ""
+      - "&6&lLOJA"
+      - "&7Adquira vips e vantagens: &b{url}"
+      - ""
+
+party:
+  # Maximo de membros por party
+  max-size: 4
+  # true = novas parties ja nascem publicas (qualquer um entra)
+  default-public: false
+  invite-expire-seconds: 60
+  # Em 1v1, party com mais membros que isso nao pode entrar na fila.
+  # Party de 2 em 1v1 = os dois lutam entre si (somente fila normal).
+  max-solo-party: 2
+  # false = quem esta em party (mesmo sozinho nela) nao pode entrar na fila ranqueada.
+  # true = party pode jogar ranqueado (exceto 1v1, que continua bloqueado para party).
+  allow-ranked: false
+
+menu:
+  unranked-title: "&aFila Normal"
+  ranked-title: "&6Fila Ranqueada"
+  party-title: "&8Party"
+  challenge-title: "&8Desafiar {player}"
+  layout-title: "&8Editar layout do kit"
+  layout-editor-title: "&8Layout: {mode}"
+  size-title: "&8{mode} &8- Escolha o formato"
+
+# Formatos exibidos ao clicar num modo (size = jogadores por time, maximo 4 exibidos)
+sizes:
+  solo:
+    size: 1
+    name: "&aSolo &7(1v1)"
+    icon: IRON_SWORD
+  dupla:
+    size: 2
+    name: "&bDupla &7(2v2)"
+    icon: DIAMOND_SWORD
+  trio:
+    size: 3
+    name: "&dTrio &7(3v3)"
+    icon: GOLDEN_SWORD
+  quarteto:
+    size: 4
+    name: "&6Quarteto &7(4v4)"
+    icon: NETHERITE_SWORD
+
+# Modos. A chave (sword, crystal_hole...) e o nome da pasta em plugins/gCelestialPracticeCore/arenas/<chave>
+modes:
+  sword:
+    name: "&fSword"
+    icon: DIAMOND_SWORD
+  crystal_hole:
+    name: "&dCrystal Hole"
+    icon: END_CRYSTAL
+  crystal_flat:
+    name: "&5Crystal Flat"
+    icon: OBSIDIAN
+  mace:
+    name: "&7Mace"
+    icon: MACE
+  spear_mace:
+    name: "&6Spear e Mace"
+    icon: TRIDENT
+  netherite_pot:
+    name: "&8Netherite Pot"
+    icon: SPLASH_POTION
+  uhc:
+    name: "&eUHC"
+    icon: GOLDEN_APPLE
+
+messages:
+  no-permission: "&cSem permissao."
+  player-only: "&cApenas jogadores."
+  usage: "&cUso: /gcpc <reload|setspawn|setkit <modo>|stats|leave|party>"
+  reload: "&aConfiguracoes, modos e arenas recarregados."
+  spawn-set: "&aSpawn do practice definido."
+  unknown-mode: "&cModo inexistente. Modos: &f{modes}"
+  kit-set: "&aKit do modo &f{mode} &asalvo com o seu inventario atual."
+  queue-join: "&7Voce entrou na fila &f{type} {size} &7de {mode}&7. Aguardando jogadores..."
+  queue-leave: "&7Voce saiu da fila."
+  already-queued: "&cVoce ja esta numa fila."
+  in-duel: "&cVoce esta em um duelo."
+  no-arena: "&cNenhuma arena configurada para {mode}&c."
+  no-kit: "&cO kit de {mode} &cainda nao foi configurado."
+  arena-error: "&cErro ao criar a arena. Avise a staff."
+  match-found: "&aPartida encontrada! &7Oponente: &f{opponent} &7| Modo: {mode} &7| &f{type}"
+  countdown-title: "&e{time}"
+  fight-title: "&a&lLUTE!"
+  point-scored: "&aTime de {player} &7marcou ponto! &f{score1} &8- &f{score2}"
+  duel-won: "&a&lVITORIA! &7Voce venceu o duelo."
+  duel-lost: "&c&lDERROTA. &7Voce perdeu o duelo."
+  ranked-change: "&7Rank {mode}&7: {rank} &8({delta} pts | total {points})"
+  opponent-quit: "&e{player} saiu da partida."
+  player-eliminated: "&c{player} &7foi eliminado."
+  stats-line: "&7{mode}&7: {rank} &8({points} pts) &7V: &a{wins} &7D: &c{losses}"
+  party-usage: "&cUso: /party <create|invite <nome>|accept <nome>|join <nome>|kick <nome>|leave|disband|public|private|info>"
+  party-created: "&aParty criada! Privacidade: {privacy}&a. Convide amigos pelo item de party."
+  party-already: "&cVoce ja esta em uma party."
+  party-not-in: "&cVoce nao esta em uma party."
+  party-leader-only: "&cApenas o lider da party pode fazer isso."
+  party-self-invite: "&cVoce nao pode convidar a si mesmo."
+  party-invite-sent: "&7Convite enviado para &f{player}&7."
+  party-invite-received: "&e{leader} &7convidou voce para a party. &a&l[CLIQUE PARA ACEITAR]"
+  party-invite-none: "&cConvite invalido ou expirado."
+  party-target-in-party: "&c{player} ja esta em uma party."
+  party-full: "&cA party esta cheia."
+  party-joined: "&a{player} &7entrou na party."
+  party-left: "&e{player} &7saiu da party."
+  party-you-left: "&7Voce saiu da party."
+  party-kicked: "&c{player} &7foi removido da party."
+  party-you-kicked: "&cVoce foi removido da party."
+  party-disbanded: "&cA party foi desfeita."
+  party-now-public: "&7A party agora e &apublica&7: qualquer um pode entrar."
+  party-now-private: "&7A party agora e &cprivada&7: so entra com convite."
+  party-new-leader: "&e{player} &7e o novo lider da party."
+  party-player-not-found: "&cJogador ou party nao encontrado."
+  party-private: "&cEssa party e privada. Peca um convite ao lider."
+  party-queue-cancelled: "&eA fila da party foi cancelada porque a party mudou."
+  party-too-big-solo: "&cUma party com mais de {max} jogadores nao pode entrar em fila 1v1."
+  party-too-big: "&cSua party tem mais jogadores do que um time {size}v{size}."
+  party-member-busy: "&c{player} esta em duelo e nao pode entrar na fila."
+  party-ranked-solo-denied: "&cParty nao pode jogar 1v1 ranqueado (os membros lutariam entre si). Use a fila normal."
+  party-info-header: "&6Party &7({privacy}&7) &8- &f{count}/{max}"
+  party-info-member: "&7- &f{player} {role}"
+  party-ranked-denied: "&cVoce nao pode jogar ranqueado enquanto estiver em uma party. Saia da party para entrar na fila ranqueada."
+  spawn-teleported: "&aVoce foi teleportado para o spawn."
+  spawn-in-duel: "&cVoce nao pode usar /spawn durante um duelo."
+  lobby-sending: "&7Indo para o lobby..."
+  lobby-in-duel: "&cVoce nao pode usar /lobby durante um duelo."
+  link-missing: "&cEsse link ainda nao foi configurado."
+  kit-layout-hint: "&7Clique em um item e depois em outro slot para trocar de lugar. Fechar o menu salva automaticamente."
+  kit-layout-saved: "&aLayout do kit {mode} &asalvo."
+  kit-layout-reset: "&7Posicoes restauradas ao padrao do kit."
+  kit-layout-nokit: "&cO kit de {mode} &cainda nao foi configurado."
+  player-not-found: "&cJogador nao encontrado."
+  duel-usage: "&cUso: /duelo <jogador>"
+  duel-self: "&cVoce nao pode desafiar a si mesmo."
+  duel-leave-queue: "&cSaia da fila antes de desafiar alguem."
+  duel-target-busy: "&c{player} esta em um duelo."
+  duel-no-modes: "&cNenhuma modalidade disponivel (o kit e a arena precisam estar configurados)."
+  duel-request-sent: "&7Voce desafiou &f{player} &7para um duelo de {mode}&7. O convite expira em {seconds}s."
+  duel-request-received: "&e{player} &7desafiou voce para um duelo de {mode}&7. &a&l[CLIQUE PARA ACEITAR] &8(/dueloaceitar {player})"
+  duel-request-none: "&cVoce nao tem convites de duelo pendentes."
+  duel-request-invalid: "&cEsse desafio nao e mais valido."
